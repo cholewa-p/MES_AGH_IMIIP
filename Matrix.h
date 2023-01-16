@@ -15,7 +15,5 @@ double** sum_matrix(double** matrix1, double** matrix2, int size);
 double* multiplication_matrix_by_vector(double** matrix1, double* vector1, int size);
 double* sum_vector(double* vector1, double* vector2, int size);
 
-
-
 double* Gauss_elimination(double** A, double* B, int n);
 double* Gauss_elimination(double** AB, int N);
