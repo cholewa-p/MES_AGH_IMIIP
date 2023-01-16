@@ -8,11 +8,6 @@ public:
 	double** ksi;
 	double* weight;
 
-	//double** sideWest;
-	//double** sideNorth;
-	//double** sideEast;
-	//double** sideSouth;
-
 	double** N;
 
 	Elem4(int nodes);
