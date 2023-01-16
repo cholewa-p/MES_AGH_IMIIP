@@ -8,10 +8,10 @@ public:
 	double** ksi;
 	double* weight;
 
-	double** sideWest;
-	double** sideNorth;
-	double** sideEast;
-	double** sideSouth;
+	//double** sideWest;
+	//double** sideNorth;
+	//double** sideEast;
+	//double** sideSouth;
 
 	double** N;
 

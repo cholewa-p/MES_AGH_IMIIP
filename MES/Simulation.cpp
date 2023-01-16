@@ -10,15 +10,15 @@ void simulation(double** H, double** C, double* P, double* t_start, int time, in
 	//for (int i = 0; i < n; i++)
 	//	cout << t_start[i] << " ";
 	//cout << endl;
-	cout << "Time[s]\tMinTemp[s]\tMaxTemp[s]\n";
+	cout << "Time[s]\tMinTemp[*C]\tMaxTemp[*C]\n";
 	for (int i = 0; i < time / step; i++)
 	{
 		double* temperature = calculate_temperature(H, C, P, t_start, step, n);
 		delete[] t_start;
-		/*cout << "Step " << i + 1 << "\n";
+		cout << "Step " << i + 1 << "\n";
 		for (int i = 0; i < n; i++)
-			cout << temperature[i] << " ";*/
-			/*cout << endl;*/
+			cout << temperature[i] << " ";
+			cout << endl;
 		double min = min_temperature(temperature, n);
 		double max = max_temperature(temperature, n);
 		cout << (time / (time / step)) * (i + 1) << "\t" << min << "\t\t" << max << "\n";
