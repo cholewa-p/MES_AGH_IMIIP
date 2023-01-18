@@ -16,7 +16,7 @@ public:
 	Element(int* array);
 	Element(int id1, int id2, int id3, int id4);
 	Element(int* array, double H1[4][4]);
-	Element(int id1, int id2, int id3, int id4, double H1[4][4]);
+	//Element(int id1, int id2, int id3, int id4, double H1[4][4]);
 	void set_id(int id1, int id2, int id3, int id4);
 	int get_id1();
 	int get_id2();
