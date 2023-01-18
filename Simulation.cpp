@@ -6,19 +6,13 @@ using namespace std;
 
 void simulation(double** H, double** C, double* P, double* t_start, int time, int step, int n)
 {
-	//cout << "Step 1\n";
-	/*
-	for (int i = 0; i < n; i++)
-		cout << t_start[i] << " ";
-	cout << endl;
-	*/
 	cout << "Time[s]\tMinTemp[*C]\tMaxTemp[*C]\n";
 	for (int i = 0; i < time / step; i++)
 	{
 		//cout << "\nstep: " << i << endl;
 		
 		double* temperature = calculate_temperature(H, C, P, t_start, step, n);
-		delete[] t_start;
+		//delete[] t_start;
 		/*
 		
 		cout << "Step " << i + 1 << "\n";

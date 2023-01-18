@@ -9,7 +9,7 @@
 #include <fstream>
 #include <sstream>
 using namespace std;
-Grid::Grid()
+Grid::Grid():nElements(NULL),nNodes(NULL),t(NULL)
 {
 	SimulationTime = NULL;
 	SimulationStepTime = NULL;
@@ -26,7 +26,6 @@ Grid::~Grid()
 {
 	delete[] nodes;
 	delete[] elements;
-	//delete[] t;
 }
 void Grid::set_Grid(string path)
 {
@@ -69,14 +68,14 @@ void Grid::set_Grid(string path)
 					SpecificHeat = stoi(value);
 				else if (name == "Nodes_number")
 				{
-					amount_of_nodes = stod(value);
+					amount_of_nodes = stoi(value);
 					nNodes = amount_of_nodes;
 					nodes = new Node[amount_of_nodes];
 					
 				}
 				else if (name == "Elements_number")
 				{
-					amount_of_element = stod(value);
+					amount_of_element = stoi(value);
 					nElements = amount_of_element;
 					elements = new Element[amount_of_element];
 				}
@@ -94,8 +93,8 @@ void Grid::set_Grid(string path)
 				node.pop_back();
 				x.pop_back();
 				Node* handle = &nodes[(stoi(node) - 1)];
-				handle->set_x(stod(x));
-				handle->set_y(stod(y));
+				handle->set_x(stof(x));
+				handle->set_y(stof(y));
 				handle->set_bc(0);
 			}
 			if (loads == 2)
