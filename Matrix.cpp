@@ -477,7 +477,8 @@ double** aggregate_vector_H(Grid& grid)
 			}
 	}
 	
-
+	/*
+	
 	for (int i = 0; i < grid.get_amount_nodes(); i++)
 	{
 		for (int j = 0; j < grid.get_amount_nodes(); j++)
@@ -486,7 +487,7 @@ double** aggregate_vector_H(Grid& grid)
 		}
 		cout << "\n";
 	}
-	
+	*/
 	return aggregation_matrix;
 
 }
