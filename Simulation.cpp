@@ -14,7 +14,6 @@ void simulation(double** H, double** C, double* P, double* t_start, int time, in
 		double* temperature = calculate_temperature(H, C, P, t_start, step, n);
 		//delete[] t_start;
 		/*
-		
 		cout << "Step " << i + 1 << "\n";
 		for (int i = 0; i < n; i++)
 			cout << temperature[i] << " ";

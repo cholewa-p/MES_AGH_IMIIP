@@ -24,8 +24,6 @@ void calculate_matrix_H(Grid& grid, Elem4 element)
 		{
 
 			//cout << "Point " << j + 1 << endl;
-
-
 			double I[2][2] = { {0,0},{0,0} };
 			double Iinv[2][2] = { {0,0},{0,0} };
 
