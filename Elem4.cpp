@@ -1,10 +1,8 @@
 #include <iostream>
-
 #include "Elem4.h"
 
-//#include "gaussIntegral.h"
 
-Elem4::Elem4(int n)
+Elem4::Elem4(int n):N(NULL),eta(NULL),ksi(NULL),weight(NULL)
 {
 	schemat = n;
 	int nodes=0;
@@ -144,8 +142,6 @@ Elem4::Elem4(Elem4& element)
 			N[i][j] = element.N[i][j];
 		}
 	}
-
-	
 }
 
 Elem4::~Elem4()

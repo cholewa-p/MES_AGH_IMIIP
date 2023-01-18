@@ -13,14 +13,13 @@ int main()
 	
 	Grid grid;
 	
-	grid.set_Grid("Test3_31_31_kwadrat.txt");
+	grid.set_Grid("Test1_4_4.txt");
 	//grid.set_Grid("Test1_4_4.txt");
 	//grid.show_elements();
 	//grid.show_nodes();
 	Elem4 element(2);
 	//element.show_Elem4();
 	calculate_matrix_H(grid, element);
-	//calculate_H_matrix(grid,element);
 	//grid.show_H_Matrix();
 	calculate_matrix_Hbc(grid,element);
 	double* P = aggregate_vector_P(grid);

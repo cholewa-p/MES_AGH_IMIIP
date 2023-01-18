@@ -7,7 +7,7 @@ Node::Node()
 	bc = 0;
 }
 
-Node::Node(float x, float y, short bc)
+Node::Node(float x, float y, bool bc)
 {
 	this->x = x;
 	this->y = y;
@@ -24,7 +24,7 @@ void Node::set_y(float y)
 	this->y = y;
 }
 
-void Node::set_bc(short bc)
+void Node::set_bc(bool bc)
 {
 	this->bc = bc;
 }
@@ -39,7 +39,7 @@ float Node::get_y()
 	return y;
 }
 
-short Node::get_bc()
+bool Node::get_bc()
 {
 	return bc;
 }

@@ -10,7 +10,7 @@ double* aggregate_vector_P(Grid& grid);
 double** aggregate_vector_H(Grid& grid);
 void calculate_matrix_C(Grid& grid, Elem4 element);
 double** aggregate_vector_C(Grid& grid);
-double** devide_matrix_by_number(double** matrix1, double number1, int size);
+double** divide_matrix_by_number(double** matrix1, double number1, int size);
 double** sum_matrix(double** matrix1, double** matrix2, int size);
 double* multiplication_matrix_by_vector(double** matrix1, double* vector1, int size);
 double* sum_vector(double* vector1, double* vector2, int size);

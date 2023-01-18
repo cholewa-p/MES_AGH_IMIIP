@@ -7,7 +7,7 @@
 #include <iostream>
 #include <cmath>
 using namespace std;
-#define print 0
+
 void calculate_matrix_H(Grid& grid, Elem4 element)
 {
 	// Wspó³czynnik przewodzenia
@@ -16,22 +16,24 @@ void calculate_matrix_H(Grid& grid, Elem4 element)
 	for (int i = 0; i < grid.get_amount_elements(); i++)
 	{
 		double H[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
-#if print==1
-		cout << "Element " << i + 1 << endl;
-#endif
+
+		//cout << "Element " << i + 1 << endl;
+
 		//Przechodzenie po ka¿dym wierzcho³ku
 		for (int j = 0; j < element.schemat * element.schemat; j++) //Dodac wiêcej punktów
 		{
-#if print==1
-			cout << "Point " << j + 1 << endl;
-#endif
+
+			//cout << "Point " << j + 1 << endl;
+
 
 			double I[2][2] = { {0,0},{0,0} };
 			double Iinv[2][2] = { {0,0},{0,0} };
 
 			jakobian(i, j, I, Iinv, element, grid);
 
-#if print==1
+
+			/*
+			
 			for (int l = 0; l < 2; l++)
 			{
 				for (int m = 0; m < 2; m++)
@@ -39,7 +41,8 @@ void calculate_matrix_H(Grid& grid, Elem4 element)
 				cout << endl;
 			}
 			cout << endl;
-#endif
+			*/
+
 			if (element.schemat == 2)
 			{
 				double dNdx[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
@@ -68,18 +71,18 @@ void calculate_matrix_H(Grid& grid, Elem4 element)
 						H1[k][m] = countivity * (Hx[k][m] + Hy[k][m]) * detI;
 
 						H[k][m] += H1[k][m];
-#if print==1
-						cout << H1[k][m] << " ";
-#endif
+
+						//cout << H1[k][m] << " ";
+
 					}
-#if print==1
-					cout << endl;
-#endif
+
+					//cout << endl;
+
 
 				}
-#if print==1
-				cout << endl;
-#endif
+
+				//cout << endl;
+
 
 			}
 			else if (element.schemat == 3)
@@ -109,20 +112,22 @@ void calculate_matrix_H(Grid& grid, Elem4 element)
 						H1[k][m] = countivity * (Hx[k][m] + Hy[k][m]) * detI * element.weight[j / 3] * element.weight[j % 3];
 
 						H[k][m] += H1[k][m];
-#if print==1
-						cout << H1[k][m] << " ";
-#endif
+
+						//cout << H1[k][m] << " ";
+
 					}
-#if print==1
-					cout << endl;
-#endif
+
+					//cout << endl;
+
 				}
-#if print==1
-				cout << endl;
-#endif
+
+				//cout << endl;
+
 			}
 		}
-#if print==1
+		
+		/*
+		
 		for (int l = 0; l < 4; l++)
 		{
 			for (int m = 0; m < 4; m++)
@@ -130,33 +135,26 @@ void calculate_matrix_H(Grid& grid, Elem4 element)
 			cout << endl;
 		}
 		cout << endl;
-#endif
+		*/
 		//save matrix H to the grid
-		//grid.save_H_Matrix(H, i);
 		for (int j = 0; j < 4; j++)
 			for (int k = 0; k < 4; k++)
 				grid.elements[i].H[j][k] = H[j][k];
 
 	}
 }
-#define print 0
 void calculate_matrix_Hbc(Grid& grid, Elem4 element)
 {
 	double alfa = grid.Alfa;
 	double endTemperature = grid.Tot;
-	double tab[2][4] = {};
+	double tab[3][4] = {};
 	int point;
 	double points[2]= { -1 / sqrt(3), 1 / sqrt(3) };
 	double points2[3]= { -sqrt(3.0 / 5.0), 0 ,sqrt(3.0 / 5.0) };
 	double weights2[3] = { 5.0 / 9.0, 8.0 / 9.0, 5.0 / 9.0 };
 	for (int i = 0; i < grid.get_amount_elements(); i++)
 	{
-
-
-
-#ifdef print==1
 		//cout << "Element " << i + 1 << endl;
-#endif 
 		if (grid.get_node(grid.get_element(i).get_id1() - 1).get_bc() == 1)
 		{
 			if (grid.get_node(grid.get_element(i).get_id2() - 1).get_bc() == 1)
@@ -195,10 +193,10 @@ void calculate_matrix_Hbc(Grid& grid, Elem4 element)
 						for (int i = 0; i < 3; i++)
 						{
 							point = -1;
-							tab[i][0] = 0.25 * (1.0 - points[i]) * (1.0 - point);
-							tab[i][1] = 0.25 * (1.0 + points[i]) * (1.0 - point);
-							tab[i][2] = 0.25 * (1.0 + points[i]) * (1.0 + point);
-							tab[i][3] = 0.25 * (1.0 - points[i]) * (1.0 + point);
+							tab[i][0] = 0.25 * (1.0 - points2[i]) * (1.0 - point);
+							tab[i][1] = 0.25 * (1.0 + points2[i]) * (1.0 - point);
+							tab[i][2] = 0.25 * (1.0 + points2[i]) * (1.0 + point);
+							tab[i][3] = 0.25 * (1.0 - points2[i]) * (1.0 + point);
 						}
 						P[k] += alfa * (weights2[0] * tab[0][k] * endTemperature + weights2[1] * tab[1][k] * endTemperature + weights2[2] * tab[2][k] * endTemperature) * det;
 
@@ -219,9 +217,6 @@ void calculate_matrix_Hbc(Grid& grid, Elem4 element)
 						grid.elements[i].Hbc[k][l] += Hbc[k][l];
 					}
 				}
-				//grid.add_boundary_Condition(i, Hbc, P);
-				
-#ifdef print==1
 				/*
 				
 				for (int z = 0; z < 4; z++)
@@ -232,16 +227,13 @@ void calculate_matrix_Hbc(Grid& grid, Elem4 element)
 				}
 				cout << endl;
 				*/
-#endif
 			}
-
 			if (grid.get_node(grid.get_element(i).get_id4() - 1).get_bc() == 1)
 			{
 				double Hbc[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
 				double P[4] = { 0,0,0,0 };
 				for (int k = 0; k < 4; k++)
 				{
-					//double det = (grid.get_height() / (grid.get_n_height() - 1)) / 2;
 
 					double det = calculate_determinant(grid.get_node(grid.get_element(i).get_id1() - 1).get_x(), grid.get_node(grid.get_element(i).get_id1() - 1).get_y(), grid.get_node(grid.get_element(i).get_id4() - 1).get_x(), grid.get_node(grid.get_element(i).get_id4() - 1).get_y()) / 2;
 
@@ -266,10 +258,10 @@ void calculate_matrix_Hbc(Grid& grid, Elem4 element)
 						for (int i = 0; i < 3; i++)
 						{
 							point = -1;
-							tab[i][0] = 0.25 * (1.0 - point) * (1.0 - points[i]);
-							tab[i][1] = 0.25 * (1.0 + point) * (1.0 - points[i]);
-							tab[i][2] = 0.25 * (1.0 + point) * (1.0 + points[i]);
-							tab[i][3] = 0.25 * (1.0 - point) * (1.0 + points[i]);
+							tab[i][0] = 0.25 * (1.0 - point) * (1.0 - points2[i]);
+							tab[i][1] = 0.25 * (1.0 + point) * (1.0 - points2[i]);
+							tab[i][2] = 0.25 * (1.0 + point) * (1.0 + points2[i]);
+							tab[i][3] = 0.25 * (1.0 - point) * (1.0 + points2[i]);
 						}
 						P[k] += alfa * (weights2[0] * tab[0][k] * endTemperature + weights2[1] * tab[1][k] * endTemperature + weights2[2] * tab[2][k] * endTemperature) * det;
 						for (int l = 0; l < 4; l++)
@@ -286,8 +278,6 @@ void calculate_matrix_Hbc(Grid& grid, Elem4 element)
 						grid.elements[i].Hbc[k][l] += Hbc[k][l];
 					}
 				}
-				//grid.add_boundary_Condition(i, Hbc, P);
-#ifdef print==1	
 				/*
 				
 				for (int z = 0; z < 4; z++)
@@ -298,7 +288,6 @@ void calculate_matrix_Hbc(Grid& grid, Elem4 element)
 				}
 				cout << endl;
 				*/
-#endif
 			}
 		}
 
@@ -310,7 +299,6 @@ void calculate_matrix_Hbc(Grid& grid, Elem4 element)
 				double P[4] = { 0,0,0,0 };
 				for (int k = 0; k < 4; k++)
 				{
-					//double det = (grid.get_height() / (grid.get_n_height() - 1)) / 2;
 
 					double det = calculate_determinant(grid.get_node(grid.get_element(i).get_id3() - 1).get_x(), grid.get_node(grid.get_element(i).get_id3() - 1).get_y(), grid.get_node(grid.get_element(i).get_id2() - 1).get_x(), grid.get_node(grid.get_element(i).get_id2() - 1).get_y()) / 2;
 					if (element.schemat == 2)
@@ -334,10 +322,10 @@ void calculate_matrix_Hbc(Grid& grid, Elem4 element)
 						for (int i = 0; i < 3; i++)
 						{
 							point = 1;
-							tab[i][0] = 0.25 * (1.0 - point) * (1.0 - points[i]);
-							tab[i][1] = 0.25 * (1.0 + point) * (1.0 - points[i]);
-							tab[i][2] = 0.25 * (1.0 + point) * (1.0 + points[i]);
-							tab[i][3] = 0.25 * (1.0 - point) * (1.0 + points[i]);
+							tab[i][0] = 0.25 * (1.0 - point) * (1.0 - points2[i]);
+							tab[i][1] = 0.25 * (1.0 + point) * (1.0 - points2[i]);
+							tab[i][2] = 0.25 * (1.0 + point) * (1.0 + points2[i]);
+							tab[i][3] = 0.25 * (1.0 - point) * (1.0 + points2[i]);
 						}
 						P[k] += alfa * (weights2[0] * tab[0][k] * endTemperature + weights2[1] * tab[1][k] * endTemperature + weights2[2] * tab[2][k] * endTemperature) * det;
 						for (int l = 0; l < 4; l++)
@@ -354,11 +342,7 @@ void calculate_matrix_Hbc(Grid& grid, Elem4 element)
 						grid.elements[i].Hbc[k][l] += Hbc[k][l];
 					}
 				}
-				//grid.add_boundary_Condition(i, Hbc, P);
-				
-#ifdef print==1
 				/*
-				
 				for (int z = 0; z < 4; z++)
 				{
 					for (int v = 0; v < 4; v++)
@@ -367,7 +351,6 @@ void calculate_matrix_Hbc(Grid& grid, Elem4 element)
 				}
 				cout << endl;
 				*/
-#endif	
 			}
 
 			if (grid.get_node(grid.get_element(i).get_id4() - 1).get_bc() == 1)
@@ -376,7 +359,6 @@ void calculate_matrix_Hbc(Grid& grid, Elem4 element)
 				double P[4] = { 0,0,0,0 };
 				for (int k = 0; k < 4; k++)
 				{
-					//double det = (grid.get_width() / (grid.get_n_width() - 1)) / 2;
 
 					double det = calculate_determinant(grid.get_node(grid.get_element(i).get_id3() - 1).get_x(), grid.get_node(grid.get_element(i).get_id3() - 1).get_y(), grid.get_node(grid.get_element(i).get_id4() - 1).get_x(), grid.get_node(grid.get_element(i).get_id4() - 1).get_y()) / 2;
 
@@ -401,10 +383,10 @@ void calculate_matrix_Hbc(Grid& grid, Elem4 element)
 						for (int i = 0; i < 3; i++)
 						{
 							point = 1;
-							tab[i][0] = 0.25 * (1.0 - points[i]) * (1.0 - point);
-							tab[i][1] = 0.25 * (1.0 + points[i]) * (1.0 - point);
-							tab[i][2] = 0.25 * (1.0 + points[i]) * (1.0 + point);
-							tab[i][3] = 0.25 * (1.0 - points[i]) * (1.0 + point);
+							tab[i][0] = 0.25 * (1.0 - points2[i]) * (1.0 - point);
+							tab[i][1] = 0.25 * (1.0 + points2[i]) * (1.0 - point);
+							tab[i][2] = 0.25 * (1.0 + points2[i]) * (1.0 + point);
+							tab[i][3] = 0.25 * (1.0 - points2[i]) * (1.0 + point);
 						}
 						P[k] += alfa * (weights2[0] * tab[0][k] * endTemperature + weights2[1] * tab[1][k] * endTemperature + weights2[2] * tab[2][k] * endTemperature) * det;
 						for (int l = 0; l < 4; l++)
@@ -421,9 +403,6 @@ void calculate_matrix_Hbc(Grid& grid, Elem4 element)
 						grid.elements[i].Hbc[k][l] += Hbc[k][l];
 					}
 				}
-				//grid.add_boundary_Condition(i, Hbc, P);
-				
-#ifdef print==1
 				/*
 				
 				for (int z = 0; z < 4; z++)
@@ -434,12 +413,10 @@ void calculate_matrix_Hbc(Grid& grid, Elem4 element)
 				}
 				cout << endl;
 				*/
-#endif
 			}
 		}
 	}
 }
-
 double calculate_determinant(double x1, double y1, double x2, double y2)
 {
 	double value = 0;
@@ -449,7 +426,6 @@ double calculate_determinant(double x1, double y1, double x2, double y2)
 	value = sqrt(x + y);
 	return value;
 }
-
 double* aggregate_vector_P(Grid& grid)
 {
 	double* aggregation_matrix = new double[grid.get_amount_nodes()];
@@ -478,10 +454,9 @@ double* aggregate_vector_P(Grid& grid)
 	return aggregation_matrix;
 
 }
-
 double** aggregate_vector_H(Grid& grid)
 {
-	//return nullptr;
+	
 	double** aggregation_matrix = new double* [grid.get_amount_nodes()];
 	for (int i = 0; i < grid.get_amount_nodes(); i++)
 	{
@@ -501,7 +476,7 @@ double** aggregate_vector_H(Grid& grid)
 				aggregation_matrix[grid.get_element(i).get_id_parameter(l) - 1][grid.get_element(i).get_id_parameter(k) - 1] += grid.elements[i].H[l][k];//get element i from matrix H in row l & column k
 			}
 	}
-	/*
+	
 
 	for (int i = 0; i < grid.get_amount_nodes(); i++)
 	{
@@ -511,11 +486,10 @@ double** aggregate_vector_H(Grid& grid)
 		}
 		cout << "\n";
 	}
-	*/
+	
 	return aggregation_matrix;
 
 }
-
 void calculate_matrix_C(Grid& grid, Elem4 element)
 {
 	double c = grid.SpecificHeat;
@@ -549,6 +523,7 @@ void calculate_matrix_C(Grid& grid, Elem4 element)
 			}
 
 		}
+		//saving to matrix C
 		for (int j = 0; j < 4; j++) {
 			for (int k = 0; k < 4; k++)
 			{
@@ -556,21 +531,7 @@ void calculate_matrix_C(Grid& grid, Elem4 element)
 			}
 		}
 	}
-		//grid.save_C_matrix(C, i);
-		/*
-		void Grid::save_C_matrix(double H[4][4], int element)
-{
-	this->elements[element].set_C_matrix(H);
 }
-		
-		void Element::set_C_matrix(double C[4][4])
-{
-	
-		*/
-
-	
-}
-
 double** aggregate_vector_C(Grid& grid)
 {
 	double** aggregation_matrix = new double* [grid.get_amount_nodes()];
@@ -605,8 +566,7 @@ double** aggregate_vector_C(Grid& grid)
 
 	return aggregation_matrix;
 }
-
-double** devide_matrix_by_number(double** matrix1, double number1, int size)
+double** divide_matrix_by_number(double** matrix1, double number1, int size)
 {
 	double** temp = new double* [size];
 	for (int i = 0; i < size; i++)
@@ -622,7 +582,6 @@ double** devide_matrix_by_number(double** matrix1, double number1, int size)
 	}
 	return temp;
 }
-
 double** sum_matrix(double** matrix1, double** matrix2, int size)
 {
 	double** temp = new double* [size];
@@ -638,14 +597,10 @@ double** sum_matrix(double** matrix1, double** matrix2, int size)
 		}
 	return temp;
 }
-
 double* multiplication_matrix_by_vector(double** matrix1, double* vector1, int size)
 {
 	double* temp = new double[size];
-	for (int i = 0; i < size; i++)
-		temp[i] = 0.0;
-
-
+	for (int i = 0; i < size; i++) temp[i] = 0.0;
 	for (int i = 0; i < size; i++)
 		for (int j = 0; j < size; j++)
 		{
@@ -653,7 +608,6 @@ double* multiplication_matrix_by_vector(double** matrix1, double* vector1, int s
 		}
 	return temp;
 }
-
 double* sum_vector(double* vector1, double* vector2, int size)
 {
 	double* temp = new double[size];
@@ -662,7 +616,6 @@ double* sum_vector(double* vector1, double* vector2, int size)
 		temp[i] = vector1[i] + vector2[i];
 	return temp;
 }
-
 double* Gauss_elimination(double** A, double* B, int n) {
 	//double** temp = merge(A, B, N);
 	//return Gauss_elimination(temp, N);
@@ -687,7 +640,6 @@ double* Gauss_elimination(double** A, double* B, int n) {
 
 	return handle;
 }
-
 double* Gauss_elimination(double** AB, int N) {
 	const double accuracy = 1e-15;
 	double* result = new double[N];

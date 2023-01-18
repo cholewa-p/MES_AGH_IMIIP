@@ -6,12 +6,12 @@ class Node
 	bool bc;
 public:
 	Node();
-	Node(float x, float y, short bc);
+	Node(float x, float y, bool bc);
 	void set_x(float x);
 	void set_y(float y);
-	void set_bc(short bc);
+	void set_bc(bool bc);
 	float get_x();
 	float get_y();
-	short get_bc();
+	bool get_bc();
 };
 
