@@ -15,7 +15,7 @@ void simulation(double** H, double** C, double* P, double* t_start, int time, in
 	cout << "Time[s]\tMinTemp[*C]\tMaxTemp[*C]\n";
 	for (int i = 0; i < time / step; i++)
 	{
-		cout << "\nstep: " << i << endl;
+		//cout << "\nstep: " << i << endl;
 		
 		double* temperature = calculate_temperature(H, C, P, t_start, step, n);
 		delete[] t_start;
@@ -28,7 +28,7 @@ void simulation(double** H, double** C, double* P, double* t_start, int time, in
 		*/
 		double min = min_temperature(temperature, n);
 		double max = max_temperature(temperature, n);
-		//cout << step * (i + 1) << "\t" << min << "\t\t" << max << "\n";
+		cout << step * (i + 1) << "\t" << min << "\t\t" << max << "\n";
 		t_start = temperature;
 		temperature = nullptr;
 	}
@@ -44,21 +44,24 @@ double* calculate_temperature(double** H, double** C, double* P, double* t_start
 		delete[] newC[i];
 	delete[] newC;
 	*/
-	//show matrix[C]
-	/*
 	
+	
+	/*
+	//show matrix[C]
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < n; j++)
 		{
-			cout << C[i][j] << " ";
+			cout << H[i][j] << " ";
 		}
 		cout << endl;
 	}
 	cout << endl;
 	*/
-	/*
+	
 	//show matrix [H]=[H]+[C]/dT
+	/*
+	
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < n; j++)

@@ -20,7 +20,7 @@ void calculate_matrix_H(Grid& grid, Elem4 element)
 		//cout << "Element " << i + 1 << endl;
 
 		//Przechodzenie po ka¿dym wierzcho³ku
-		for (int j = 0; j < element.schemat * element.schemat; j++) //Dodac wiêcej punktów
+		for (int j = 0; j < element.schemat * element.schemat; j++) 
 		{
 
 			//cout << "Point " << j + 1 << endl;
@@ -127,6 +127,7 @@ void calculate_matrix_H(Grid& grid, Elem4 element)
 		}
 		
 		/*
+		
 		
 		for (int l = 0; l < 4; l++)
 		{
