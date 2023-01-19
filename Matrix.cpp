@@ -163,7 +163,6 @@ void calculate_matrix_Hbc(Grid& grid, Elem4 element)
 
 				for (int k = 0; k < 4; k++)
 				{
-					//double det = (grid.get_width() / (grid.get_n_width() - 1)) / 2;
 
 					double det = calculate_determinant(
 						grid.get_node(grid.get_element(i).get_id1() - 1).get_x(),
@@ -216,6 +215,7 @@ void calculate_matrix_Hbc(Grid& grid, Elem4 element)
 						grid.elements[i].Hbc[k][l] += Hbc[k][l];
 					}
 				}
+				
 				/*
 				
 				for (int z = 0; z < 4; z++)
