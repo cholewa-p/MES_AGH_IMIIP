@@ -12,8 +12,8 @@ int main()
 {
 	
 	Grid grid;
-	grid.set_Grid("Test2_4_4_MixGrid.txt");
-	//grid.set_Grid("Test1_4_4.txt");
+	//grid.set_Grid("Test2_4_4_MixGrid.txt");
+	grid.set_Grid("Test1_4_4.txt");
 	//grid.show_elements();
 	//grid.show_nodes();
 	Elem4 element(2);

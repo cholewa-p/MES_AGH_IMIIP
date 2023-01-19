@@ -10,9 +10,7 @@ void simulation(double** H, double** C, double* P, double* t_start, int time, in
 	for (int i = 0; i < time / step; i++)
 	{
 		//cout << "\nstep: " << i << endl;
-		
 		double* temperature = calculate_temperature(H, C, P, t_start, step, n);
-		//delete[] t_start;
 		/*
 		cout << "Step " << i + 1 << "\n";
 		for (int i = 0; i < n; i++)
@@ -23,7 +21,6 @@ void simulation(double** H, double** C, double* P, double* t_start, int time, in
 		double max = max_temperature(temperature, n);
 		cout << step * (i + 1) << "\t" << min << "\t\t" << max << "\n";
 		t_start = temperature;
-		temperature = nullptr;
 	}
 }
 
@@ -31,13 +28,6 @@ double* calculate_temperature(double** H, double** C, double* P, double* t_start
 {
 	double** newC = divide_matrix_by_number(C, step, n);
 	double** newMatrixHC = sum_matrix(H, newC, n);
-	/*
-	
-	for (int i = 0; i < n; i++)
-		delete[] newC[i];
-	delete[] newC;
-	*/
-	
 	
 	/*
 	//show matrix[C]
@@ -67,11 +57,7 @@ double* calculate_temperature(double** H, double** C, double* P, double* t_start
 	*/
 	newC = divide_matrix_by_number(C, step, n);
 	double* newVector = multiplication_matrix_by_vector(newC, t_start, n);
-	/*
-	for (int i = 0; i < n; i++)
-		delete[] newC[i];
-	delete[] newC;
-	*/
+
 	
 	/*
 	
@@ -85,7 +71,6 @@ double* calculate_temperature(double** H, double** C, double* P, double* t_start
 	double* newVector2 = sum_vector(newVector, P, n);
 	
 	//show Vector {P}={P}+{[C]/dT}*T[i]
-	
 	/*
 	
 	for (int i = 0; i < n; i++)

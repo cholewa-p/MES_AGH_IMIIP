@@ -292,7 +292,6 @@ void Grid::sum_BC()
 {
 	for (int i = 0; i < nElements; i++)
 	{
-		//this->elements[i].add_boundary_condition();
 		for (int j = 0; j < 4; j++)
 			for (int k = 0; k < 4; k++)
 			{
